@@ -12,20 +12,20 @@ timeout /t 5 /nobreak > nul
 echo Setting up Backend...
 cd backend
 call npx prisma generate
-start "Backend" cmd /c "npm run start:dev"
+start "Backend" cmd /k "npm run start:dev"
 
 :: Setup Client
 echo Starting Client...
 cd ../client
-start "Client" cmd /c "npm run dev"
+start "Client" cmd /k "npm run dev"
 
 :: Setup Admin
 echo Starting Admin...
 cd ../admin
-start "Admin" cmd /c "npm run dev"
+start "Admin" cmd /k "npm run dev"
 
 echo All services are starting up.
-echo Backend: http://localhost:3000
-echo Client: http://localhost:3001
-echo Admin: http://localhost:3002
+echo Backend: http://localhost:3100
+echo Client: http://localhost:3003
+echo Admin: http://localhost:3004
 pause

@@ -1,17 +1,24 @@
 version: '3.8'
 
 services:
-  db:
+  flower-db:
+    container_name: flower-postgres-db
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: flower_shop_user
-      POSTGRES_PASSWORD: flower_shop_password
-      POSTGRES_DB: flower_shop_db
+      POSTGRES_USER: pili_admin
+      POSTGRES_PASSWORD: pili_secure_pass_2024
+      POSTGRES_DB: pili_blossom_db
     ports:
-      - '5432:5432'
+      - '5433:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - flower_network
+
+networks:
+  flower_network:
+    driver: bridge
 
 volumes:
   postgres_data:

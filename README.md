@@ -30,9 +30,9 @@ The project is structured as a monorepo-style workspace with three distinct serv
 
 Service | Port | URL
 --- | --- | ---
-**Backend** | 3000 | `http://localhost:3000`
-**Client** | 3001 | `http://localhost:3001`
-**Admin** | 3002 | `http://localhost:3002`
+**Backend** | 3100 | `http://localhost:3100`
+**Client** | 3003 | `http://localhost:3003`
+**Admin** | 3004 | `http://localhost:3004`
 
 ## 📦 Key Features
 

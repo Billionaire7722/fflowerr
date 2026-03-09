@@ -3,18 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Minus, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
+import { useCart } from "@/contexts/CartContext";
 
 export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-  const [items, setItems] = useState<CartItem[]>([
-    { id: "1", name: "Bó Hồng Nhung", price: 85, quantity: 1 }
-  ]);
+  const { items, updateQuantity, total, clearCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,14 +16,12 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
     customMessage: ""
   });
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("http://localhost:3000/orders", {
+      const response = await fetch("http://localhost:3100/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -42,6 +32,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
 
       if (response.ok) {
         setIsOrdered(true);
+        clearCart();
         setTimeout(() => {
            setIsOrdered(false);
            setIsCheckingOut(false);
@@ -75,7 +66,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
             className="fixed right-0 top-0 h-full w-full max-w-md bg-[var(--floral-cream)] shadow-2xl z-[101] p-8 flex flex-col"
           >
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-serif">Khu Vườn Của Bạn</h2>
+              <h2 className="text-3xl font-serif">pili.blossom</h2>
               <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full"><X /></button>
             </div>
 
@@ -102,14 +93,14 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                         <p className="text-gray-500">${item.price}</p>
                         <div className="flex items-center gap-3 mt-2">
                           <button 
-                            onClick={() => setItems(prev => prev.map(i => i.id === item.id ? {...i, quantity: Math.max(1, i.quantity - 1)} : i))}
+                            onClick={() => updateQuantity(item.id, -1)}
                             className="p-1 border rounded-md"
                           >
                             <Minus size={14}/>
                           </button>
                           <span>{item.quantity}</span>
                           <button 
-                             onClick={() => setItems(prev => prev.map(i => i.id === item.id ? {...i, quantity: i.quantity + 1} : i))}
+                             onClick={() => updateQuantity(item.id, 1)}
                              className="p-1 border rounded-md"
                           >
                             <Plus size={14}/>

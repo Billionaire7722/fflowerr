@@ -1,23 +1,14 @@
-"use client";
-
-import AdminLayout from "@/components/AdminLayout";
 import { 
   TrendingUp, 
-  Users, 
   ShoppingBasket, 
   DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
   Zap,
   Package,
   Activity
 } from "lucide-react";
 import { 
-  BarChart, 
-  Bar, 
   XAxis, 
   YAxis, 
-  CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
   AreaChart,
@@ -34,7 +25,7 @@ export default function Dashboard() {
   useEffect(() => {
     fetchAnalytics();
     
-    const socket = io("http://localhost:3000");
+    const socket = io("http://localhost:3100");
     socket.on("orderCreated", (order: any) => {
       setLiveOrders(prev => [order, ...prev].slice(0, 5));
       fetchAnalytics();
@@ -45,7 +36,7 @@ export default function Dashboard() {
 
   const fetchAnalytics = async () => {
     try {
-      const res = await fetch("http://localhost:3000/analytics/overview");
+      const res = await fetch("http://localhost:3100/analytics/overview");
       const data = await res.json();
       setStats(data);
     } catch (error) {
@@ -53,10 +44,10 @@ export default function Dashboard() {
     }
   };
 
-  if (!stats) return <AdminLayout><div className="flex items-center justify-center h-full text-slate-400 font-medium">Đang tải dữ liệu từ vườn hoa...</div></AdminLayout>;
+  if (!stats) return <div className="flex items-center justify-center h-full text-slate-400 font-medium">Đang tải dữ liệu từ vườn hoa...</div>;
 
   return (
-    <AdminLayout>
+    <div>
       <header className="mb-10 flex justify-between items-start">
         <div>
           <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Trung Tâm Điều Hành</h1>
@@ -179,6 +170,6 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

@@ -1,6 +1,3 @@
-"use client";
-
-import AdminLayout from "@/components/AdminLayout";
 import { useEffect, useState } from "react";
 import { 
   CheckCircle, 
@@ -10,8 +7,6 @@ import {
   Filter,
   Loader2,
   Calendar,
-  User,
-  CreditCard,
   ShoppingBasket
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,14 +21,14 @@ interface Order {
   createdAt: string;
 }
 
-export default function OrdersPage() {
+export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchOrders();
     
-    const socket = io("http://localhost:3000");
+    const socket = io("http://localhost:3100");
     socket.on("orderCreated", () => {
       fetchOrders();
     });
@@ -43,7 +38,7 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:3000/orders");
+      const res = await fetch("http://localhost:3100/orders");
       const data = await res.json();
       setOrders(data);
     } catch (err) {
@@ -56,7 +51,7 @@ export default function OrdersPage() {
   const updateStatus = async (id: string, currentStatus: string) => {
     const nextStatus = currentStatus === 'PENDING_VERIFICATION' ? 'COMPLETED' : 'PENDING_VERIFICATION';
     try {
-      await fetch(`http://localhost:3000/orders/${id}/status`, {
+      await fetch(`http://localhost:3100/orders/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus })
@@ -68,7 +63,7 @@ export default function OrdersPage() {
   };
 
   return (
-    <AdminLayout>
+    <div>
       <header className="mb-12 flex justify-between items-start">
         <div>
           <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Đơn Hàng Boutique</h1>
@@ -77,9 +72,9 @@ export default function OrdersPage() {
         <div className="flex gap-4">
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={20} />
-            <input className="pl-12 pr-6 py-3 border border-slate-200 rounded-[1.25rem] bg-white text-sm focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none w-72 transition-all shadow-sm" placeholder="Tìm kiếm khách hàng..." />
+            <input className="pl-12 pr-6 py-3 border border-slate-200 rounded-[1.25rem] bg-white text-sm focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none w-72 transition-all shadow-sm text-slate-800" placeholder="Tìm kiếm khách hàng..." />
           </div>
-          <button className="flex items-center gap-2 px-6 py-3 border border-slate-200 rounded-[1.25rem] bg-white text-sm font-bold shadow-sm hover:bg-slate-50 transition-all">
+          <button className="flex items-center gap-2 px-6 py-3 border border-slate-200 rounded-[1.25rem] bg-white text-sm font-bold shadow-sm hover:bg-slate-50 transition-all text-slate-700">
             <Filter size={20} />
             Bộ Lọc
           </button>
@@ -104,7 +99,7 @@ export default function OrdersPage() {
              <p className="mt-2 text-slate-500">Sẵn sàng kéo, chúng ta sẽ sớm có khách hàng!</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto text-slate-800">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100">
@@ -176,6 +171,6 @@ export default function OrdersPage() {
           </div>
         )}
       </div>
-    </AdminLayout>
+    </div>
   );
 }

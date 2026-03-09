@@ -1,27 +1,23 @@
-"use client";
-
 import { 
   LayoutDashboard, 
   ShoppingBag, 
   Package, 
   BarChart3, 
   LogOut,
-  Flower2,
-  Bell
+  Flower2
 } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Toaster, toast } from 'sonner';
+import { Link, useLocation, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
+import { toast } from 'sonner';
 
 const ADMIN_PATH = "/admin/portal-d6a1b2e3-f4g5-6h7i-8j9k-l0m1n2o3p4q5";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+export default function AdminLayout() {
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io("http://localhost:3100");
 
     socket.on("orderCreated", (order) => {
       toast.success(`Đơn hàng mới từ ${order.customerName}!`, {
@@ -44,9 +40,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      <Toaster position="top-right" richColors />
-      
+    <div className="flex min-h-screen bg-slate-50 text-slate-900">
       {/* Sidebar */}
       <aside className="w-72 bg-slate-900 text-white p-8 flex flex-col fixed h-full border-r border-white/5">
         <div className="flex items-center gap-4 mb-12 px-2">
@@ -54,8 +48,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
              <Flower2 size={28} className="text-white" />
           </div>
           <div>
-            <span className="text-xl font-bold block tracking-tight">Florist Admin</span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-rose-400 font-bold">Premium Boutique</span>
+            <span className="text-xl font-bold block tracking-tight">pili.blossom</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-rose-400 font-bold">Premium Boutique Admin</span>
           </div>
         </div>
 
@@ -66,14 +60,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             return (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className={`flex items-center gap-3 px-5 py-4 rounded-2xl transition-all duration-300 group ${
                   isActive 
                     ? "bg-emerald-600 text-white shadow-xl shadow-emerald-600/20" 
                     : "text-slate-400 hover:bg-white/5 hover:text-white"
                 }`}
               >
-                <Icon size={22} className={isActive ? "text-white" : "group-hover:text-gold-400"} />
+                <Icon size={22} className={isActive ? "text-white" : "group-hover:text-emerald-400"} />
                 <span className="font-medium">{link.name}</span>
                 {isActive && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
               </Link>
@@ -97,8 +91,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="ml-72 flex-1 p-12 bg-gradient-to-br from-slate-50 to-white min-h-screen">
-        {children}
+      <main className="ml-72 flex-1 p-12 bg-gradient-to-br from-slate-50 to-white min-h-screen overflow-y-auto">
+        <Outlet />
       </main>
     </div>
   );

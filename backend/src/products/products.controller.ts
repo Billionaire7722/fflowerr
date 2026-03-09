@@ -1,6 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Post, 
+  Body, 
+  Patch, 
+  Param, 
+  Delete, 
+  UseInterceptors, 
+  UploadedFiles 
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { Prisma } from '@prisma/client';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
@@ -17,13 +27,47 @@ export class ProductsController {
   }
 
   @Post()
-  create(@Body() data: Prisma.ProductCreateInput) {
-    return this.productsService.create(data);
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'images', maxCount: 7 },
+      { name: 'videos', maxCount: 3 },
+    ]),
+  )
+  create(
+    @Body() data: any,
+    @UploadedFiles() files: { images?: Express.Multer.File[], videos?: Express.Multer.File[] }
+  ) {
+    // Convert tags string to array if it comes as a string (from FormData)
+    if (typeof data.tags === 'string') {
+      try {
+        data.tags = JSON.parse(data.tags);
+      } catch {
+        data.tags = data.tags.split(',').map(t => t.trim());
+      }
+    }
+    return this.productsService.create(data, files);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.ProductUpdateInput) {
-    return this.productsService.update(id, data);
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'images', maxCount: 7 },
+      { name: 'videos', maxCount: 3 },
+    ]),
+  )
+  update(
+    @Param('id') id: string, 
+    @Body() data: any,
+    @UploadedFiles() files: { images?: Express.Multer.File[], videos?: Express.Multer.File[] }
+  ) {
+    if (typeof data.tags === 'string') {
+      try {
+        data.tags = JSON.parse(data.tags);
+      } catch {
+        data.tags = data.tags.split(',').map(t => t.trim());
+      }
+    }
+    return this.productsService.update(id, data, files);
   }
 
   @Delete(':id')

@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Bó hoa tinh tế cho những khoảnh khắc đặc biệt của bạn",
 };
 
+import { CartProvider } from "@/contexts/CartContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

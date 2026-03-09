@@ -1,13 +1,9 @@
-"use client";
-
-import AdminLayout from "@/components/AdminLayout";
 import { 
   Package, 
   Trash2, 
   Edit3, 
   Plus,
   AlertTriangle,
-  TrendingDown,
   Layers,
   Coins
 } from "lucide-react";
@@ -22,7 +18,7 @@ interface Material {
   unit: string;
 }
 
-export default function InventoryPage() {
+export default function Inventory() {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +28,7 @@ export default function InventoryPage() {
 
   const fetchMaterials = async () => {
     try {
-      const res = await fetch("http://localhost:3000/materials");
+      const res = await fetch("http://localhost:3100/materials");
       const data = await res.json();
       setMaterials(data);
     } catch (err) {
@@ -46,7 +42,7 @@ export default function InventoryPage() {
   const lowStockCount = materials.filter(m => m.stockLevel < 10).length;
 
   return (
-    <AdminLayout>
+    <div>
       <header className="mb-12 flex justify-between items-start">
         <div>
           <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Kho Nguyên Liệu</h1>
@@ -85,7 +81,7 @@ export default function InventoryPage() {
 
       <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-2xl shadow-slate-200/40 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left text-slate-800">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
                 <th className="px-10 py-6 text-xs font-bold text-slate-500 uppercase tracking-widest">Nguyên Liệu</th>
@@ -104,11 +100,11 @@ export default function InventoryPage() {
                 </tr>
               ) : materials.map((item, i) => (
                 <motion.tr 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  key={item.id} 
-                  className="hover:bg-emerald-50/20 transition-colors group"
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   transition={{ delay: i * 0.05 }}
+                   key={item.id} 
+                   className="hover:bg-emerald-50/20 transition-colors group"
                 >
                   <td className="px-10 py-8">
                     <div className="flex items-center gap-4">
@@ -131,10 +127,10 @@ export default function InventoryPage() {
                   </td>
                   <td className="px-10 py-8 text-right">
                     <div className="flex justify-end gap-3 invisible group-hover:visible transition-all">
-                      <button className="p-3 bg-white border border-slate-100 hover:border-emerald-200 hover:text-emerald-600 rounded-2xl transition-all shadow-sm hover:shadow-md">
+                      <button className="p-3 bg-white border border-slate-100 hover:border-emerald-200 hover:text-emerald-600 rounded-2xl transition-all shadow-sm hover:shadow-md text-slate-400">
                         <Edit3 size={20} />
                       </button>
-                      <button className="p-3 bg-white border border-slate-100 hover:border-rose-200 hover:text-rose-600 rounded-2xl transition-all shadow-sm hover:shadow-md">
+                      <button className="p-3 bg-white border border-slate-100 hover:border-rose-200 hover:text-rose-600 rounded-2xl transition-all shadow-sm hover:shadow-md text-slate-400">
                         <Trash2 size={20} />
                       </button>
                     </div>
@@ -145,6 +141,6 @@ export default function InventoryPage() {
           </table>
         </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 }
