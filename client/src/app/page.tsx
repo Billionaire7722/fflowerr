@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { ShoppingCart, Leaf, Star, Clock } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
