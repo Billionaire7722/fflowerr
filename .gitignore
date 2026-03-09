@@ -1,0 +1,9 @@
+node_modules/
+.next/
+dist/
+.env
+*.log
+.DS_Store
+backend/.env
+client/.next
+admin/.next

@@ -1,0 +1,32 @@
+:root {
+  --floral-pink: #ffafbd;
+  --floral-rose: #ffc3a0;
+  --floral-green: #2d5a27;
+  --floral-cream: #fff9f0;
+  --floral-dark: #1a2e1a;
+  --floral-gold: #d4af37;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--floral-cream)] text-[var(--floral-dark)] antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-bold text-[var(--floral-dark)];
+  }
+}
+
+.glass-morphism {
+  @apply bg-white/30 backdrop-blur-md border border-white/20 shadow-lg;
+}
+
+.btn-primary {
+  @apply bg-[var(--floral-green)] text-white px-6 py-3 rounded-full font-semibold transition-all hover:bg-[var(--floral-dark)] hover:scale-105 active:scale-95;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+}
