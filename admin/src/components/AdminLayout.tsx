@@ -16,10 +16,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   const links = [
-    { name: "Dashboard", href: "/management-portal", icon: LayoutDashboard },
-    { name: "Orders", href: "/management-portal/orders", icon: ShoppingBag },
-    { name: "Inventory", href: "/management-portal/inventory", icon: Package },
-    { name: "Analytics", href: "/management-portal/analytics", icon: BarChart3 },
+    { name: "Tổng Quan", href: "/management-portal", icon: LayoutDashboard },
+    { name: "Đơn Hàng", href: "/management-portal/orders", icon: ShoppingBag },
+    { name: "Kho Hàng", href: "/management-portal/inventory", icon: Package },
+    { name: "Phân Tích", href: "/management-portal/analytics", icon: BarChart3 },
   ];
 
   return (
@@ -54,8 +54,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <div className="pt-6 border-t border-white/10">
            <button className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white transition-colors w-full text-left">
-             <LogOut size={20} />
-             <span>Sign Out</span>
+            <LogOut size={20} />
+             <span>Đăng Xuất</span>
            </button>
         </div>
       </aside>

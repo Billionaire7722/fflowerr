@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "Boutique Florist | Freshness Delivered",
-  description: "Exquisite flower bouquets for your special moments",
+  title: "Cửa Hàng Hoa Boutique | Giao Hoa Tươi Tận Nơi",
+  description: "Bó hoa tinh tế cho những khoảnh khắc đặc biệt của bạn",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
         {children}
       </body>

@@ -60,17 +60,17 @@ export default function OrdersPage() {
     <AdminLayout>
       <header className="mb-10 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">Order Management</h1>
-          <p className="text-slate-500">Track and verify incoming floral requests in real-time.</p>
+          <h1 className="text-3xl font-bold text-slate-800">Quản Lý Đơn Hàng</h1>
+          <p className="text-slate-500">Theo dõi và xác nhận các đơn hàng mới trong thời gian thực.</p>
         </div>
         <div className="flex gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input className="pl-10 pr-4 py-2 border rounded-xl bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Search orders..." />
+            <input className="pl-10 pr-4 py-2 border rounded-xl bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tìm kiếm đơn hàng..." />
           </div>
           <button className="flex items-center gap-2 px-4 py-2 border rounded-xl bg-white text-sm font-medium hover:bg-slate-50 transition-colors">
             <Filter size={18} />
-            Filter
+            Lọc
           </button>
         </div>
       </header>
@@ -79,22 +79,22 @@ export default function OrdersPage() {
         {isLoading ? (
           <div className="flex flex-col items-center justify-center p-20 text-slate-400">
              <Loader2 className="animate-spin mb-4" size={40} />
-             <p>Gardening blooming orders...</p>
+             <p>Đang chuẩn bị danh sách đơn hàng...</p>
           </div>
         ) : orders.length === 0 ? (
           <div className="p-20 text-center text-slate-400">
-             <p>No orders yet. Your flowers are waiting for fans!</p>
+             <p>Chưa có đơn hàng nào. Những đóa hoa đang chờ đợi chủ nhân!</p>
           </div>
         ) : (
           <table className="w-full text-left">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Order ID</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Customer</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Total</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Status</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Date</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Actions</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Mã Đơn</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Khách Hàng</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Tổng Tiền</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Trạng Thái</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Ngày Đặt</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Thao Tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -116,7 +116,7 @@ export default function OrdersPage() {
                       }`}
                     >
                       {order.status === 'COMPLETED' ? <CheckCircle size={14} /> : <Clock size={14} />}
-                      {order.status === 'COMPLETED' ? 'Completed' : 'Pending Verification'}
+                      {order.status === 'COMPLETED' ? 'Hoàn Thành' : 'Chờ Xác Nhận'}
                     </button>
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-500">

@@ -22,12 +22,12 @@ import {
 } from 'recharts';
 
 const DATA = [
-  { name: 'Jan', revenue: 4000, profit: 2400 },
-  { name: 'Feb', revenue: 3000, profit: 1398 },
-  { name: 'Mar', revenue: 2000, profit: 9800 },
-  { name: 'Apr', revenue: 2780, profit: 3908 },
-  { name: 'May', revenue: 1890, profit: 4800 },
-  { name: 'Jun', revenue: 2390, profit: 3800 },
+  { name: 'Th1', revenue: 4000, profit: 2400 },
+  { name: 'Th2', revenue: 3000, profit: 1398 },
+  { name: 'Th3', revenue: 2000, profit: 9800 },
+  { name: 'Th4', revenue: 2780, profit: 3908 },
+  { name: 'Th5', revenue: 1890, profit: 4800 },
+  { name: 'Th6', revenue: 2390, profit: 3800 },
 ];
 
 export default function Dashboard() {
@@ -35,21 +35,21 @@ export default function Dashboard() {
     <AdminLayout>
       <header className="mb-10 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">Business Overview</h1>
-          <p className="text-slate-500">Welcome back, manager. Here's what's happening today.</p>
+          <h1 className="text-3xl font-bold text-slate-800">Tổng Quan Kinh Doanh</h1>
+          <p className="text-slate-500">Chào mừng quản lý quay trở lại. Đây là tình hình kinh doanh hôm nay.</p>
         </div>
         <div className="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200 text-sm font-medium">
-          March 09, 2026
+          Ngày 09 Tháng 03, 2026
         </div>
       </header>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {[
-          { label: "Total Revenue", value: "$12,450", icon: DollarSign, trend: "+12%", color: "text-blue-600", bg: "bg-blue-50" },
-          { label: "New Orders", value: "84", icon: ShoppingBasket, trend: "+5%", color: "text-green-600", bg: "bg-green-50" },
-          { label: "Net Profit", value: "$6,210", icon: TrendingUp, trend: "-2%", color: "text-orange-600", bg: "bg-orange-50" },
-          { label: "Active Clients", value: "1,240", icon: Users, trend: "+8%", color: "text-purple-600", bg: "bg-purple-50" },
+          { label: "Tổng Doanh Thu", value: "$12,450", icon: DollarSign, trend: "+12%", color: "text-blue-600", bg: "bg-blue-50" },
+          { label: "Đơn Hàng Mới", value: "84", icon: ShoppingBasket, trend: "+5%", color: "text-green-600", bg: "bg-green-50" },
+          { label: "Lợi Nhuận Ròng", value: "$6,210", icon: TrendingUp, trend: "-2%", color: "text-orange-600", bg: "bg-orange-50" },
+          { label: "Khách Hàng Đang Hoạt Động", value: "1,240", icon: Users, trend: "+8%", color: "text-purple-600", bg: "bg-purple-50" },
         ].map((stat, i) => (
           <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
             <div className="flex justify-between items-start mb-4">
@@ -70,7 +70,7 @@ export default function Dashboard() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm h-[400px]">
-          <h3 className="text-lg font-bold mb-6">Revenue Analysis</h3>
+          <h3 className="text-lg font-bold mb-6">Phân Tích Doanh Thu</h3>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={DATA}>
               <defs>
@@ -90,7 +90,7 @@ export default function Dashboard() {
         </div>
 
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm h-[400px]">
-          <h3 className="text-lg font-bold mb-6">Sales Performance</h3>
+          <h3 className="text-lg font-bold mb-6">Hiệu Suất Bán Hàng</h3>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={DATA}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />

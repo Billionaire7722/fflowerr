@@ -7,10 +7,10 @@ import { useState } from "react";
 import CartSidebar from "@/components/CartSidebar";
 
 const FLOWERS = [
-  { id: 1, name: "Velvet Rose Bouquet", price: 85, color: "bg-pink-100", image: "/rose.jpg" },
-  { id: 2, name: "Sunshine Lilies", price: 65, color: "bg-yellow-100", image: "/lily.jpg" },
-  { id: 3, name: "Midnight Orchid", price: 120, color: "bg-purple-100", image: "/orchid.jpg" },
-  { id: 4, name: "Eucalyptus Dream", price: 45, color: "bg-green-100", image: "/eucalyptus.jpg" },
+  { id: 1, name: "Bó Hồng Nhung", price: 85, color: "bg-pink-100", image: "/rose.jpg" },
+  { id: 2, name: "Hoa Ly Nắng Mai", price: 65, color: "bg-yellow-100", image: "/lily.jpg" },
+  { id: 3, name: "Lan Đêm", price: 120, color: "bg-purple-100", image: "/orchid.jpg" },
+  { id: 4, name: "Giấc Mơ Khuynh Diệp", price: 45, color: "bg-green-100", image: "/eucalyptus.jpg" },
 ];
 
 export default function Home() {
@@ -36,12 +36,12 @@ export default function Home() {
           transition={{ duration: 1 }}
           className="max-w-3xl z-10"
         >
-          <span className="text-[var(--floral-green)] font-semibold tracking-widest uppercase mb-4 block">Premium Boutique</span>
-          <h1 className="text-6xl md:text-8xl mb-6 text-[var(--floral-dark)]">Artisan Floral <br/> Creations</h1>
+          <span className="text-[var(--floral-green)] font-semibold tracking-widest uppercase mb-4 block">Cửa Hàng Cao Cấp</span>
+          <h1 className="text-6xl md:text-8xl mb-6 text-[var(--floral-dark)]">Nghệ Thuật <br/> Sáng Tạo Hoa</h1>
           <p className="text-xl text-[var(--floral-dark)] opacity-80 mb-8 max-w-xl mx-auto">
-            Hand-crafted bouquets that capture the essence of nature's beauty, delivered directly to your doorstep.
+            Những bó hoa được làm thủ công ghi lại vẻ đẹp tinh túy của thiên nhiên, giao tận tay bạn.
           </p>
-          <button className="btn-primary">Explore Collection</button>
+          <button className="btn-primary">Khám Phá Bộ Sưu Tập</button>
         </motion.div>
         
         {/* Floating Petals Decor (Simplified for now) */}
@@ -55,10 +55,10 @@ export default function Home() {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-4xl mb-4">Seasonal Favorites</h2>
+            <h2 className="text-4xl mb-4">Hoa Yêu Thích Theo Mùa</h2>
             <div className="h-1 w-20 bg-[var(--floral-green)]"></div>
           </div>
-          <p className="text-gray-500 max-w-xs">Curated by our master florists for the current blooming season.</p>
+          <p className="text-gray-500 max-w-xs">Được tuyển chọn bởi các nghệ nhân cắm hoa cho mùa hoa nở đẹp nhất hiện tại.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -92,21 +92,21 @@ export default function Home() {
       {/* Stats/Badges */}
       <section className="bg-[var(--floral-dark)] text-white py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-           <div className="flex flex-col items-center">
-             <Star className="text-[var(--floral-gold)] mb-4" size={40} />
-             <h4 className="text-xl mb-2">Artisanal Quality</h4>
-             <p className="opacity-60">Each bouquet is a unique masterpiece.</p>
-           </div>
-           <div className="flex flex-col items-center">
-             <Clock className="text-[var(--floral-gold)] mb-4" size={40} />
-             <h4 className="text-xl mb-2">Same Day Delivery</h4>
-             <p className="opacity-60">Fresh flowers to your door within hours.</p>
-           </div>
-           <div className="flex flex-col items-center">
-             <Leaf className="text-[var(--floral-gold)] mb-4" size={40} />
-             <h4 className="text-xl mb-2">Ethically Sourced</h4>
-             <p className="opacity-60">Directly from local sustainable farms.</p>
-           </div>
+            <div className="flex flex-col items-center">
+              <Star className="text-[var(--floral-gold)] mb-4" size={40} />
+              <h4 className="text-xl mb-2">Chất Lượng Nghệ Nhân</h4>
+              <p className="opacity-60">Mỗi bó hoa là một tác phẩm nghệ thuật độc bản.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Clock className="text-[var(--floral-gold)] mb-4" size={40} />
+              <h4 className="text-xl mb-2">Giao Hàng Trong Ngày</h4>
+              <p className="opacity-60">Hoa tươi đến cửa nhà bạn chỉ trong vài giờ.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Leaf className="text-[var(--floral-gold)] mb-4" size={40} />
+              <h4 className="text-xl mb-2">Nguồn Gốc Đạo Đức</h4>
+              <p className="opacity-60">Trực tiếp từ các nông trại bền vững địa phương.</p>
+            </div>
         </div>
       </section>
     </main>
