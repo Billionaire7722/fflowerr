@@ -2,9 +2,11 @@
 
 :root {
   --admin-bg: #f8fafc;
-  --admin-sidebar: #1e293b;
-  --admin-primary: #3b82f6;
-  --admin-success: #22c55e;
+  --admin-sidebar: #0f172a;
+  --admin-primary: #10b981; /* Emerald Green */
+  --admin-secondary: #fb7185; /* Rose Pink */
+  --admin-accent: #fbbf24; /* Gold */
+  --admin-success: #10b981;
   --admin-warning: #f59e0b;
 }
 

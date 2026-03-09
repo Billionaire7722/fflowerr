@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Order, OrderStatus, Prisma } from '@prisma/client';
+import { AppGateway } from '../app.gateway';
 
 @Injectable()
 export class OrdersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private gateway: AppGateway,
+  ) {}
 
   async create(data: {
     customerName: string;
@@ -32,7 +36,7 @@ export class OrdersService {
       };
     });
 
-    return this.prisma.order.create({
+    const order = await this.prisma.order.create({
       data: {
         customerName: data.customerName,
         phone: data.phone,
@@ -47,6 +51,9 @@ export class OrdersService {
         items: true,
       },
     });
+
+    this.gateway.notifyOrderCreated(order);
+    return order;
   }
 
   async findAll(): Promise<Order[]> {
