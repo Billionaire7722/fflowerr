@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --admin-bg: #f8fafc;
   --admin-sidebar: #1e293b;
@@ -6,7 +8,7 @@
   --admin-warning: #f59e0b;
 }
 
-@base {
+@layer base {
   body {
     @apply bg-[var(--admin-bg)] text-slate-900 antialiased;
     font-family: 'Inter', sans-serif;
