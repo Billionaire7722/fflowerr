@@ -11,24 +11,54 @@
 
 @layer base {
   body {
-    @apply bg-[var(--floral-cream)] text-[var(--floral-dark)] antialiased;
+    background-color: var(--floral-cream);
+    color: var(--floral-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
-    @apply font-bold text-[var(--floral-dark)];
+    font-weight: 700;
+    color: var(--floral-dark);
   }
 }
 
 .glass-morphism {
-  @apply bg-white/30 backdrop-blur-md border border-white/20 shadow-lg;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
-  @apply bg-[var(--floral-green)] text-white px-6 py-3 rounded-full font-semibold transition-all hover:bg-[var(--floral-dark)] hover:scale-105 active:scale-95;
+  background-color: var(--floral-green);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--floral-dark);
+  transform: scale(1.05);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
 }
 
 .card-hover {
-  @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
