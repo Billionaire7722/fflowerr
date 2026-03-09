@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Plus, Minus, Send, CheckCircle2 } from "lucide-react";
+import { X, Plus, Minus, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -13,20 +13,47 @@ interface CartItem {
 
 export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [items, setItems] = useState<CartItem[]>([
-    { id: 1, name: "Velvet Rose Bouquet", price: 85, quantity: 1 }
+    { id: "1", name: "Velvet Rose Bouquet", price: 85, quantity: 1 }
   ]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    customerName: "",
+    phone: "",
+    customMessage: ""
+  });
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const handleOrderSubmit = (e: React.FormEvent) => {
+  const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsOrdered(true);
-    setTimeout(() => {
-       setIsOrdered(false);
-       onClose();
-    }, 3000);
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          items: items.map(i => ({ productId: i.id, quantity: i.quantity }))
+        })
+      });
+
+      if (response.ok) {
+        setIsOrdered(true);
+        setTimeout(() => {
+           setIsOrdered(false);
+           setIsCheckingOut(false);
+           onClose();
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Order submission failed:", error);
+      alert("Failed to send order. Is the backend running?");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -74,9 +101,19 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                         <h4 className="font-semibold">{item.name}</h4>
                         <p className="text-gray-500">${item.price}</p>
                         <div className="flex items-center gap-3 mt-2">
-                          <button className="p-1 border rounded-md"><Minus size={14}/></button>
+                          <button 
+                            onClick={() => setItems(prev => prev.map(i => i.id === item.id ? {...i, quantity: Math.max(1, i.quantity - 1)} : i))}
+                            className="p-1 border rounded-md"
+                          >
+                            <Minus size={14}/>
+                          </button>
                           <span>{item.quantity}</span>
-                          <button className="p-1 border rounded-md"><Plus size={14}/></button>
+                          <button 
+                             onClick={() => setItems(prev => prev.map(i => i.id === item.id ? {...i, quantity: i.quantity + 1} : i))}
+                             className="p-1 border rounded-md"
+                          >
+                            <Plus size={14}/>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -101,22 +138,44 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                  <div className="flex-1 space-y-4 overflow-y-auto pr-2">
                    <div>
                      <label className="block text-sm font-medium mb-1">Your Name</label>
-                     <input required className="w-full p-3 rounded-xl border border-black/10 bg-white" placeholder="Jane Doe" />
+                     <input 
+                       required 
+                       value={formData.customerName}
+                       onChange={(e) => setFormData({...formData, customerName: e.target.value})}
+                       className="w-full p-3 rounded-xl border border-black/10 bg-white focus:ring-2 focus:ring-[var(--floral-green)] outline-none" 
+                       placeholder="Jane Doe" 
+                     />
                    </div>
                    <div>
                      <label className="block text-sm font-medium mb-1">Phone Number</label>
-                     <input required className="w-full p-3 rounded-xl border border-black/10 bg-white" placeholder="+1 (555) 000-0000" />
+                     <input 
+                       required 
+                       value={formData.phone}
+                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                       className="w-full p-3 rounded-xl border border-black/10 bg-white focus:ring-2 focus:ring-[var(--floral-green)] outline-none" 
+                       placeholder="+1 (555) 000-0000" 
+                     />
                    </div>
                    <div>
                      <label className="block text-sm font-medium mb-1">Custom Message (Optional)</label>
-                     <textarea rows={4} className="w-full p-3 rounded-xl border border-black/10 bg-white" placeholder="A special something for someone special..." />
+                     <textarea 
+                       rows={4} 
+                       value={formData.customMessage}
+                       onChange={(e) => setFormData({...formData, customMessage: e.target.value})}
+                       className="w-full p-3 rounded-xl border border-black/10 bg-white focus:ring-2 focus:ring-[var(--floral-green)] outline-none" 
+                       placeholder="A special something for someone special..." 
+                     />
                    </div>
                  </div>
 
                  <div className="pt-6 border-t border-black/10">
-                   <button type="submit" className="w-full btn-primary flex items-center justify-center gap-2">
-                     <Send size={18} />
-                     Send Order
+                   <button 
+                     type="submit" 
+                     disabled={isSubmitting}
+                     className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50"
+                   >
+                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
+                     {isSubmitting ? "Sending..." : "Send Order"}
                    </button>
                    <button 
                     type="button"
