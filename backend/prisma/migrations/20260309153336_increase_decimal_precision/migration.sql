@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Material" ALTER COLUMN "unitCost" SET DATA TYPE DECIMAL(20,2);
+
+-- AlterTable
+ALTER TABLE "Order" ALTER COLUMN "totalPrice" SET DATA TYPE DECIMAL(20,2);
+
+-- AlterTable
+ALTER TABLE "OrderItem" ALTER COLUMN "price" SET DATA TYPE DECIMAL(20,2);
+
+-- AlterTable
+ALTER TABLE "Product" ALTER COLUMN "price" SET DATA TYPE DECIMAL(20,2);

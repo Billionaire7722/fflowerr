@@ -7,34 +7,62 @@ datasource db {
 }
 
 model Product {
-  id          String      @id @default(uuid())
+  id          String            @id @default(uuid())
   name        String
   description String?
-  price       Decimal     @db.Decimal(10, 2)
-  images      String[]    @default([])
-  videos      String[]    @default([])
-  tags        String[]    @default([])
+  price       Decimal           @db.Decimal(20, 2)
+  images      String[]          @default([])
+  videos      String[]          @default([])
+  tags        String[]          @default([])
+  categoryId  String?
+  category    Category?         @relation(fields: [categoryId], references: [id])
   items       OrderItem[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  materials   ProductMaterial[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Material {
-  id         String   @id @default(uuid())
+  id         String            @id @default(uuid())
   name       String
-  unitCost   Decimal  @db.Decimal(10, 2)
+  unitCost   Decimal           @db.Decimal(20, 2)
   stockLevel Int
-  unit       String   @default("pcs")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  unit       String            @default("pcs")
+  image      String?
+  products   ProductMaterial[]
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+}
+
+model ProductMaterial {
+  id         String   @id @default(uuid())
+  productId  String
+  materialId String
+  quantity   Int
+
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([materialId])
 }
 
 model Order {
+// ... existing Order model ...
+// Unchanged lines below
   id            String      @id @default(uuid())
   customerName  String
   phone         String
   customMessage String?
-  totalPrice    Decimal     @db.Decimal(10, 2)
+  totalPrice    Decimal     @db.Decimal(20, 2)
   status        OrderStatus @default(PENDING_VERIFICATION)
   items         OrderItem[]
   createdAt     DateTime    @default(now())
@@ -46,7 +74,7 @@ model OrderItem {
   orderId   String
   productId String
   quantity  Int
-  price     Decimal @db.Decimal(10, 2)
+  price     Decimal @db.Decimal(20, 2)
 
   order   Order   @relation(fields: [orderId], references: [id])
   product Product @relation(fields: [productId], references: [id])

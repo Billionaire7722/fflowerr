@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { MaterialsService } from './materials.service';
-import { Prisma } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('materials')
 export class MaterialsController {
@@ -12,13 +12,22 @@ export class MaterialsController {
   }
 
   @Post()
-  create(@Body() data: Prisma.MaterialCreateInput) {
-    return this.materialsService.create(data);
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @Body() data: any,
+    @UploadedFile() file?: Express.Multer.File
+  ) {
+    return this.materialsService.create(data, file);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.MaterialUpdateInput) {
-    return this.materialsService.update(id, data);
+  @UseInterceptors(FileInterceptor('image'))
+  update(
+    @Param('id') id: string, 
+    @Body() data: any,
+    @UploadedFile() file?: Express.Multer.File
+  ) {
+    return this.materialsService.update(id, data, file);
   }
 
   @Delete(':id')

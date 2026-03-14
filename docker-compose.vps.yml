@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  flower-backend:
+    container_name: flower-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3100
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "${FLOWER_API_PORT:-3111}:3100"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - flower_net
+      - rental_net
+
+  flower-client:
+    container_name: flower-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${FLOWER_PUBLIC_API_URL}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "${FLOWER_WEB_PORT:-3110}:3000"
+    depends_on:
+      - flower-backend
+    networks:
+      - flower_net
+
+  flower-admin:
+    container_name: flower-admin
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${FLOWER_PUBLIC_API_URL}
+    restart: unless-stopped
+    ports:
+      - "${FLOWER_ADMIN_PORT:-3112}:80"
+    depends_on:
+      - flower-backend
+    networks:
+      - flower_net
+
+networks:
+  flower_net:
+    driver: bridge
+  rental_net:
+    external: true
+    name: rental_network

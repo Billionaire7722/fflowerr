@@ -13,12 +13,13 @@ import {
 } from 'recharts';
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { API_BASE_URL } from "../lib/api";
 
 export default function Analytics() {
   const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3100/analytics/overview")
+    fetch(`${API_BASE_URL}/analytics/overview`)
       .then(res => res.json())
       .then(data => setStats(data));
   }, []);

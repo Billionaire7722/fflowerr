@@ -48,9 +48,37 @@ export class OrdersService {
         },
       },
       include: {
-        items: true,
+        items: {
+          include: {
+            product: {
+              include: {
+                materials: true
+              }
+            }
+          }
+        },
       },
     });
+
+    // Automatically deduct inventory
+    for (const item of order.items) {
+      for (const pm of item.product.materials) {
+        const neededQuantity = pm.quantity * item.quantity;
+        const material = await this.prisma.material.update({
+          where: { id: pm.materialId },
+          data: {
+            stockLevel: {
+              decrement: neededQuantity
+            }
+          }
+        });
+
+        // Notify if stock is low (< 5)
+        if (material.stockLevel < 5) {
+          this.gateway.notifyLowStock(material);
+        }
+      }
+    }
 
     this.gateway.notifyOrderCreated(order);
     return order;

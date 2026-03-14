@@ -42,4 +42,8 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   notifyProductUpdated(product: any) {
     this.server.emit('productUpdated', product);
   }
+
+  notifyLowStock(material: any) {
+    this.server.emit('lowStock', material);
+  }
 }

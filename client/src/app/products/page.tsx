@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import CartSidebar from "@/components/CartSidebar";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Product {
   id: string;
@@ -40,7 +41,7 @@ export default function ProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3100/products");
+      const res = await fetch(`${API_BASE_URL}/products`);
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -50,8 +51,8 @@ export default function ProductsPage() {
     }
   };
 
-  const formatVND = (value: number) => {
-    return new Intl.NumberFormat('vi-VN').format(value);
+  const formatVND = (value: number | string) => {
+    return Number(value).toLocaleString('vi-VN') + " VND";
   };
 
   const filteredProducts = products.filter(p => {
@@ -64,9 +65,12 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-[var(--floral-cream)] relative overflow-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-xl border-b border-black/5 px-8 py-6 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 group">
-          <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-serif text-2xl font-bold text-emerald-900 tracking-tighter">pili.blossom</span>
+        <Link href="/" className="flex items-center gap-3 group">
+          <ArrowLeft className="group-hover:-translate-x-1 transition-transform text-emerald-900" />
+          <div className="w-10 h-10 bg-emerald-50 rounded-full p-0.5 border border-emerald-100 overflow-hidden shadow-sm group-hover:scale-110 transition-transform">
+            <img src="/logo.svg" alt="Logo" className="w-full h-full object-cover rounded-full" />
+          </div>
+          <span className="font-serif text-2xl font-bold text-emerald-900 tracking-tighter group-hover:text-emerald-600 transition-colors">pili.blossom</span>
         </Link>
         <button 
           onClick={() => setIsCartOpen(true)}
@@ -134,12 +138,17 @@ export default function ProductsPage() {
                   )}
                   
                   <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl font-black text-emerald-900 shadow-xl text-lg">
-                    {formatVND(p.price)} đ
+                    {formatVND(p.price)}
                   </div>
 
                   <button 
                     onClick={() => {
-                      addItem({ id: p.id, name: p.name, price: Number(p.price) });
+                      addItem({ 
+                        id: p.id, 
+                        name: p.name, 
+                        price: Number(p.price),
+                        image: p.images?.[0] || ""
+                      });
                       setIsCartOpen(true);
                     }}
                     className="absolute bottom-6 inset-x-6 bg-black text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transform translate-y-20 group-hover:translate-y-0 transition-all duration-500 hover:bg-emerald-600 shadow-2xl"

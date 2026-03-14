@@ -7,6 +7,7 @@ import { OrdersModule } from './orders/orders.module';
 import { MaterialsModule } from './materials/materials.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { WebsocketModule } from './websocket/websocket.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { WebsocketModule } from './websocket/websocket.module';
     ProductsModule, 
     OrdersModule, 
     MaterialsModule, 
-    AnalyticsModule
+    AnalyticsModule, CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
