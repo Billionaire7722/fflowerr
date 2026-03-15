@@ -24,7 +24,7 @@ export default function Analytics() {
   if (!stats) {
     return (
       <div className="flex items-center justify-center h-full text-slate-400 font-medium">
-        Ph�n t�ch d�ng ch?y d? li?u...
+        Phân tích đang xử lý dữ liệu...
       </div>
     );
   }
@@ -39,7 +39,7 @@ export default function Analytics() {
           Kinh Doanh Chi Ti?t
         </h1>
         <p className="text-slate-500 mt-1">
-          Ph�n t�ch d?a tr�n d? li?u don h�ng th?c t?.
+          Phân tích dựa trên dữ liệu đơn hàng thực tế.
         </p>
       </header>
 
@@ -53,7 +53,7 @@ export default function Analytics() {
             <div className="bg-purple-50 text-purple-600 p-3 rounded-2xl">
               <TrendingUp size={24} />
             </div>
-            <h3 className="text-xl font-bold">Bi?u �? Doanh Thu Th�ng</h3>
+            <h3 className="text-xl font-bold">Biểu đồ Doanh Thu Tháng</h3>
           </div>
           {hasRevenue ? (
             <ResponsiveContainer width="100%" height="80%">
@@ -75,9 +75,9 @@ export default function Analytics() {
           ) : (
             <div className="flex flex-col items-center justify-center h-[70%] text-slate-400">
               <Activity size={56} className="mb-6 opacity-30" />
-              <p className="text-sm font-semibold">Chua c� d? li?u doanh thu</p>
+              <p className="text-sm font-semibold">Chưa có dữ liệu doanh thu</p>
               <p className="text-xs text-slate-400 mt-2">
-                Bi?u d? s? hi?n th? khi c� don h�ng ho�n t?t.
+                Biểu đồ sẽ hiển thị khi có đơn hàng hoàn tất.
               </p>
             </div>
           )}
@@ -93,14 +93,14 @@ export default function Analytics() {
             <div className="bg-amber-50 text-amber-600 p-3 rounded-2xl">
               <ShoppingBasket size={24} />
             </div>
-            <h3 className="text-xl font-bold">T?ng Quan �on H�ng</h3>
+            <h3 className="text-xl font-bold">Tổng quan đơn hàng</h3>
           </div>
 
           {hasOrders ? (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-slate-500 font-semibold">
-                  <ShoppingBasket size={18} /> T?ng don h�ng
+                  <ShoppingBasket size={18} /> Tổng đơn hàng
                 </div>
                 <div className="text-2xl font-black text-slate-900">
                   {stats.totalOrders.toLocaleString("vi-VN")}
@@ -108,7 +108,7 @@ export default function Analytics() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-emerald-600 font-semibold">
-                  <CheckCircle2 size={18} /> Ho�n t?t
+                  <CheckCircle2 size={18} /> Hoàn tất
                 </div>
                 <div className="text-2xl font-black text-emerald-600">
                   {stats.completedOrders.toLocaleString("vi-VN")}
@@ -116,7 +116,7 @@ export default function Analytics() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-amber-600 font-semibold">
-                  <Clock size={18} /> �ang ch?
+                  <Clock size={18} /> Đang chờ
                 </div>
                 <div className="text-2xl font-black text-amber-600">
                   {stats.pendingOrders.toLocaleString("vi-VN")}
@@ -126,9 +126,9 @@ export default function Analytics() {
           ) : (
             <div className="flex flex-col items-center justify-center h-[70%] text-slate-400">
               <Activity size={56} className="mb-6 opacity-30" />
-              <p className="text-sm font-semibold">Chua c� don h�ng</p>
+              <p className="text-sm font-semibold">Chưa có đơn hàng</p>
               <p className="text-xs text-slate-400 mt-2">
-                D? li?u s? hi?n th? khi c� don h�ng m?i.
+                Dữ liệu sẽ hiển thị khi có đơn hàng mới.
               </p>
             </div>
           )}

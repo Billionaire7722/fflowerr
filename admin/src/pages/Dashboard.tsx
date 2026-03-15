@@ -30,8 +30,8 @@ export default function Dashboard() {
     socket.on("orderCreated", (order: any) => {
       setLiveOrders((prev) => [order, ...prev].slice(0, 5));
       fetchAnalytics();
-      toast.success(`�on h�ng m?i t? ${order.customerName}!`, {
-        description: `T?ng gi� tr?: ${Number(order.totalPrice).toLocaleString("vi-VN")} VND`,
+      toast.success(`Đơn hàng mới từ ${order.customerName}!`, {
+        description: `Tổng giá trị: ${Number(order.totalPrice).toLocaleString("vi-VN")} VND`,
         icon: <ShoppingBasket className="text-emerald-500" size={18} />,
       });
     });
@@ -54,7 +54,7 @@ export default function Dashboard() {
   if (!stats) {
     return (
       <div className="flex items-center justify-center h-full text-slate-400 font-medium">
-        �ang t?i d? li?u t? vu?n hoa...
+        Đang tải dữ liệu...
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function Dashboard() {
     if (!Number.isFinite(value) || value <= 0) {
       return (
         <span className="text-sm text-slate-400 font-semibold">
-          Chua c� d? li?u
+          Chưa có dữ liệu
         </span>
       );
     }
@@ -80,7 +80,7 @@ export default function Dashboard() {
 
   const statCards = [
     {
-      label: "T?ng Doanh Thu",
+      label: "Tổng doanh thu",
       value: stats.totalRevenue,
       icon: DollarSign,
       color: "text-emerald-600",
@@ -88,7 +88,7 @@ export default function Dashboard() {
       formatter: formatCurrency,
     },
     {
-      label: "V?n Nguy�n Li?u",
+      label: "Vốn nguyên liệu",
       value: stats.totalMaterialCost,
       icon: Package,
       color: "text-rose-600",
@@ -96,7 +96,7 @@ export default function Dashboard() {
       formatter: formatCurrency,
     },
     {
-      label: "T?ng �on H�ng",
+      label: "Tổng đơn hàng",
       value: stats.totalOrders,
       icon: ShoppingBasket,
       color: "text-amber-600",
@@ -104,7 +104,7 @@ export default function Dashboard() {
       formatter: formatCount,
     },
     {
-      label: "T?ng S?n Ph?m",
+      label: "Tổng sản phẩm",
       value: stats.totalProducts,
       icon: Leaf,
       color: "text-purple-600",
@@ -118,15 +118,15 @@ export default function Dashboard() {
       <header className="mb-10 flex justify-between items-start">
         <div>
           <h1 className="text-4xl font-black text-slate-900 tracking-tight">
-            Trung T�m �i?u H�nh
+            Trung tâm điều hành
           </h1>
           <p className="text-slate-500 font-medium">
-            V? d?p t? nh?ng d�a hoa, hi?u qu? t? nh?ng con s?.
+            Vẻ đẹp từ những đóa hoa, hiệu quả từ những con số.
           </p>
         </div>
         <div className="flex items-center gap-3">
           <div className="bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 text-sm font-bold text-slate-500 uppercase tracking-widest leading-none flex items-center h-full">
-            Th�ng {new Date().getMonth() + 1}, {new Date().getFullYear()}
+            Tháng {new Date().getMonth() + 1}, {new Date().getFullYear()}
           </div>
         </div>
       </header>
@@ -162,7 +162,7 @@ export default function Dashboard() {
           <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200/60 shadow-xl shadow-slate-200/50 h-[480px] flex flex-col">
             <div className="flex justify-between items-center mb-10">
               <h3 className="text-xl font-black text-slate-900 tracking-tight">
-                Doanh Thu Theo Th�ng
+                Doanh Thu Theo Tháng
               </h3>
               <div className="flex gap-6">
                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -216,10 +216,10 @@ export default function Dashboard() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300">
                   <Activity size={64} className="mb-6 opacity-20" />
                   <p className="font-black uppercase tracking-widest text-xs mb-2">
-                    Chua c� d? li?u doanh thu
+                    Chưa có dữ liệu doanh thu
                   </p>
                   <p className="text-sm font-medium text-slate-400 text-center px-8">
-                    Khi c� don h�ng ho�n t?t, bi?u d? s? t? d?ng c?p nh?t.
+                    Khi có đơn hàng hoàn tất, biểu đồ sẽ tự động cập nhật.
                   </p>
                 </div>
               )}
@@ -233,7 +233,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xl font-black flex items-center gap-3 tracking-tight text-balance">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_12px_rgba(16,185,129,0.8)]" />
-              Lu?ng �on H�ng Live
+              Luồng đơn hàng Live
             </h3>
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
               Real-time
@@ -260,14 +260,14 @@ export default function Dashboard() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400 line-clamp-2 italic font-medium leading-relaxed">
-                      "{order.customMessage || "�on h�ng m?i"}"
+                      "{order.customMessage || "Đơn hàng mới"}"
                     </p>
                     <div className="mt-4 flex items-center justify-between">
                       <span className="text-[9px] uppercase tracking-widest text-slate-500 font-black">
-                        V?a xong
+                        Vừa xong
                       </span>
                       <div className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[9px] font-black tracking-tighter shadow-sm border border-emerald-500/10">
-                        M?I
+                        MỚI
                       </div>
                     </div>
                   </motion.div>
@@ -278,10 +278,10 @@ export default function Dashboard() {
                     <ShoppingBasket size={32} className="text-slate-600 opacity-50" />
                   </div>
                   <p className="text-sm font-black text-slate-500 uppercase tracking-widest mb-1 text-center">
-                    �ang ch? don h�ng
+                    Đang chờ đơn hàng
                   </p>
                   <p className="text-xs text-slate-600 font-medium italic text-center">
-                    Chua c� don h�ng m?i trong th?i gian g?n d�y.
+                    Chưa có đơn hàng mới trong thời gian gần đây.
                   </p>
                 </div>
               )}
